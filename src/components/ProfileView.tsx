@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { Grid, Typography, Avatar } from "@mui/material";
 import type { SxProps } from "@mui/material";
 import type { UserInfo } from "../types";
