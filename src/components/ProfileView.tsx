@@ -13,6 +13,7 @@ export default function ProfileView({
     <Grid container sx={sx}>
       <Grid
         container
+        item
         xs={12}
         sm={4}
         sx={{
@@ -28,7 +29,7 @@ export default function ProfileView({
           sx={{ width: 180, height: 180 }}
         />
       </Grid>
-      <Grid container spacing={2} xs={12} sm={8} sx={{ alignItems: "start" }}>
+      <Grid container item spacing={2} xs={12} sm={8} sx={{ alignItems: "start" }}>
         <Grid item xs={12} sm={3}>
           <Typography variant="h6" align="right">
             Name

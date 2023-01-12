@@ -13,6 +13,7 @@ import {
 } from "../utils/client-router";
 
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import ProfileViewScreen from "../screens/ProfileViewScreen";
 
 const theme = createTheme({
   typography: {
@@ -30,8 +31,9 @@ const Home: NextPage = () => {
       </Head>
       <ClientRouterProvider>
         <ClientRouter whileLoading={<Loading />}>
-          <ClientRoute path="/" component={<DashboardScreen />} />
-          <ClientRoute path="/form" component={<FormScreen />} />
+          <ClientRoute path="/" Component={DashboardScreen} />
+          <ClientRoute path="/form" Component={FormScreen} />
+          <ClientRoute path="/view/:id" Component={ProfileViewScreen} />
         </ClientRouter>
       </ClientRouterProvider>
     </ThemeProvider>

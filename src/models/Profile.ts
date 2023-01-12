@@ -5,7 +5,7 @@ const ProfileSchema = new mongoose.Schema({
   lastName: String,
   gender: String,
   dateOfBirth: String,
-  sports: [[String]],
+  sports: [String],
   location: String,
   team: String,
   description: String,

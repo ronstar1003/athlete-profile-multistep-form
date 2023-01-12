@@ -16,9 +16,7 @@ const MyApp: AppType = ({ Component, pageProps }) => {
       <CssBaseline />
       <Header />
       {typeof window === "undefined" ? (
-        <div>
-          <Loading />
-        </div>
+        <Loading />
       ) : (
         <Component {...pageProps} />
       )}

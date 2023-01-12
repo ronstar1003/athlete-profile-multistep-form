@@ -16,9 +16,11 @@ import BasicInfoForm from "../components/BasicInfoForm";
 import MoreDetailsForm from "../components/MoreDetailsForm";
 import ProfileView from "../components/ProfileView";
 
+import { api } from "../utils/api";
 import { ClientLink } from "../utils/client-router";
 import { Error } from "../types";
 import type { UserInfo, Field } from "../types";
+import Loading from "../components/Loading";
 
 const steps = ["Basic Info", "More details", "Review"];
 
@@ -42,7 +44,6 @@ const checkStepValidity = (
     newError.team = !userInfo.team;
   }
   setError({ ...error, ...newError });
-  console.log(newError);
   for (const key of Object.keys(newError) as Iterable<Field>) {
     if (newError[key]) return false;
   }
@@ -85,7 +86,29 @@ export default function FormScreen() {
     [dirty, error, userInfo]
   );
 
+  const { data, mutate, isLoading, isSuccess } =
+    api.profile.create.useMutation();
+
+  const handleFinish = () => {
+    mutate(userInfo);
+  };
+
+  const handleNext = () => {
+    if (activeStep === 0) setDirty([true, dirty[1] as boolean]);
+    if (activeStep === 1) setDirty([dirty[0] as boolean, true]);
+    if (activeStep === 2) {
+      handleFinish();
+    }
+    if (!checkStepValidity(userInfo, activeStep, error, setError)) return;
+    setActiveStep(activeStep + 1);
+  };
+
+  const handleBack = () => {
+    setActiveStep(activeStep - 1);
+  };
+
   const stepContent = React.useMemo(() => {
+    if (isSuccess) return <div>Success</div>;
     switch (activeStep) {
       case 0:
         return (
@@ -109,24 +132,12 @@ export default function FormScreen() {
         );
       case 2:
         return <ProfileView userInfo={userInfo} sx={{ mt: 2 }} />;
+      case 3:
+        return isSuccess ? <div>Success</div> : <div>Saving ...</div>;
       default:
         throw new Error("Unknown step");
     }
-  }, [activeStep, userInfo, error, handleFormInputChange]);
-
-  const handleNext = () => {
-    if (activeStep === 0) setDirty([true, dirty[1] as boolean]);
-    if (activeStep === 1) setDirty([dirty[0] as boolean, true]);
-    if (activeStep === 2) {
-      return;
-    }
-    if (!checkStepValidity(userInfo, activeStep, error, setError)) return;
-    setActiveStep(activeStep + 1);
-  };
-
-  const handleBack = () => {
-    setActiveStep(activeStep - 1);
-  };
+  }, [activeStep, userInfo, error, handleFormInputChange, isLoading]);
 
   return (
     <>
@@ -153,33 +164,50 @@ export default function FormScreen() {
             ))}
           </Stepper>
           {activeStep === steps.length ? (
-            <React.Fragment>
-              <Typography variant="h5" gutterBottom>
-                Thank you for your order.
-              </Typography>
-              <Typography variant="subtitle1">
-                Your order number is #2001539. We have emailed your order
-                confirmation, and will send you an update when your order has
-                shipped.
-              </Typography>
-            </React.Fragment>
+            isSuccess ? (
+              <>
+                <Typography variant="h5" align="center" gutterBottom>
+                  Successfully created.
+                </Typography>
+                <Typography variant="subtitle1" align="center">
+                  You can{" "}
+                  <ClientLink to={`/view/${data._id}`}>
+                    <Typography color="blue" component="span">
+                      view
+                    </Typography>
+                  </ClientLink>{" "}
+                  your profile or{" "}
+                  <ClientLink to="/">
+                    <Typography color="blue" component="span">
+                      go
+                    </Typography>{" "}
+                    to home
+                  </ClientLink>
+                  .
+                </Typography>
+              </>
+            ) : (
+              <Loading />
+            )
           ) : (
             <React.Fragment>
               {stepContent}
-              <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-                {activeStep !== 0 && (
-                  <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
-                    Back
+              {!isSuccess && (
+                <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                  {activeStep !== 0 && (
+                    <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
+                      Back
+                    </Button>
+                  )}
+                  <Button
+                    variant="contained"
+                    onClick={handleNext}
+                    sx={{ mt: 3, ml: 1 }}
+                  >
+                    {activeStep === steps.length - 1 ? "Finish" : "Next"}
                   </Button>
-                )}
-                <Button
-                  variant="contained"
-                  onClick={handleNext}
-                  sx={{ mt: 3, ml: 1 }}
-                >
-                  {activeStep === steps.length - 1 ? "Finish" : "Next"}
-                </Button>
-              </Box>
+                </Box>
+              )}
             </React.Fragment>
           )}
         </Paper>

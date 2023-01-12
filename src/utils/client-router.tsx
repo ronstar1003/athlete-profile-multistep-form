@@ -4,7 +4,7 @@ import type {
   PropsWithChildren,
 } from "react";
 import React, { useContext, useEffect } from "react";
-import { useState } from "react";
+import { useState, forwardRef } from "react";
 
 interface Context {
   route: string;
@@ -19,13 +19,18 @@ export const ClientRouterContext = React.createContext<Context>({
 
 interface RouteProps {
   path: string;
-  component: JSX.Element;
+  Component: ({ param }: { param: string }) => JSX.Element;
 }
 
-export const ClientRoute = ({ component, path }: RouteProps) => {
+export const ClientRoute = ({ Component, path }: RouteProps) => {
   const { route } = useContext(ClientRouterContext);
 
-  return route === `${path}` ? component : null;
+  const pathScreen = path.split("/")[1] || path.split("/")[0];
+  const [routeScreen, routeParam] = route.split("/").slice(1);
+
+  return routeScreen === pathScreen ? (
+    <Component param={routeParam || ""} />
+  ) : null;
 };
 
 interface LinkProps extends ComponentProps<"a"> {
@@ -33,24 +38,22 @@ interface LinkProps extends ComponentProps<"a"> {
   replace?: boolean;
 }
 
-export const ClientLink = ({
-  children,
-  to,
-  replace,
-  ...restProps
-}: LinkProps) => {
-  const handleClick: MouseEventHandler<HTMLAnchorElement> = (e) => {
-    e.preventDefault();
-    window.history.pushState({}, "", to);
-    window.dispatchEvent(new PopStateEvent("popstate"));
-  };
+// eslint-disable-next-line react/display-name
+export const ClientLink = forwardRef(
+  ({ children, to, ...restProps }: LinkProps, ref) => {
+    const handleClick: MouseEventHandler<HTMLAnchorElement> = (e) => {
+      e.preventDefault();
+      window.history.pushState({}, "", to);
+      window.dispatchEvent(new PopStateEvent("popstate"));
+    };
 
-  return (
-    <a href={to} {...restProps} onClick={handleClick}>
-      {children}
-    </a>
-  );
-};
+    return (
+      <a href={to} {...restProps} onClick={handleClick}>
+        {children}
+      </a>
+    );
+  }
+);
 
 interface RouterProps {
   whileLoading?: JSX.Element;

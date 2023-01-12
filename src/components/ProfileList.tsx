@@ -7,9 +7,11 @@ import {
   TableRow,
   TableCell,
   TableBody,
+  Button,
 } from "@mui/material";
 
 import type { ProfileRow } from "../types";
+import { ClientLink } from "../utils/client-router";
 
 export default function ProfileList({
   rows,
@@ -28,6 +30,7 @@ export default function ProfileList({
             <TableCell align="right">Gender</TableCell>
             <TableCell align="right">Date of Birth</TableCell>
             <TableCell align="right">Sports</TableCell>
+            <TableCell align="right"></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -43,6 +46,17 @@ export default function ProfileList({
               <TableCell align="right">{row.gender ? "F" : "M"}</TableCell>
               <TableCell align="right">{row.dateOfBirth}</TableCell>
               <TableCell align="right">{row.sports.join(", ")}</TableCell>
+              <TableCell align="right">
+                <Button
+                  component={ClientLink}
+                  to={`/view/${row._id}`}
+                  variant="text"
+                  sx={{ textTransform: "none", p: 0 }}
+                  size="small"
+                >
+                  View
+                </Button>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

@@ -89,7 +89,7 @@ export default function BasicInfoForm({
               row
               aria-labelledby="gender-label"
               value={userInfo.gender}
-              onChange={(e) => handleChange("gender", e.target.value)}
+              onChange={(e) => handleChange("gender", Number(e.target.value))}
             >
               <FormControlLabel value="1" control={<Radio />} label="Female" />
               <FormControlLabel value="0" control={<Radio />} label="Male" />
