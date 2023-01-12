@@ -1,11 +1,9 @@
-import type { Moment } from "moment";
-
 export type ProfileRow = {
   _id: string;
   firstName: string;
   lastName: string;
   gender: 0 | 1 | null;
-  dateOfBirth: Moment | null;
+  dateOfBirth: string;
   sports: string[];
 };
 

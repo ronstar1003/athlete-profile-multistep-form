@@ -41,9 +41,7 @@ export default function ProfileList({
               </TableCell>
               <TableCell align="right">{`${row.firstName} ${row.lastName}`}</TableCell>
               <TableCell align="right">{row.gender ? "F" : "M"}</TableCell>
-              <TableCell align="right">
-                {row.dateOfBirth?.format("YYYY-MM-DD") || ""}
-              </TableCell>
+              <TableCell align="right">{row.dateOfBirth}</TableCell>
               <TableCell align="right">{row.sports.join(", ")}</TableCell>
             </TableRow>
           ))}

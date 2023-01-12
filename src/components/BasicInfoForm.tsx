@@ -16,6 +16,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 import SportsSelect from "./SportsSelect";
 import type { UserInfo, Field, Error } from "../types";
+import moment from "moment";
 
 export default function BasicInfoForm({
   userInfo,
@@ -58,8 +59,10 @@ export default function BasicInfoForm({
           <LocalizationProvider dateAdapter={AdapterMoment}>
             <DatePicker
               label="Date of Birth"
-              value={userInfo.dateOfBirth}
-              onChange={(value) => handleChange("dateOfBirth", value)}
+              value={moment(userInfo.dateOfBirth)}
+              onChange={(value) =>
+                handleChange("dateOfBirth", value?.format("YYYY-MM-DD"))
+              }
               inputFormat="YYYY-MM-DD"
               renderInput={(params) => (
                 <TextField

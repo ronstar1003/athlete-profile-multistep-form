@@ -67,7 +67,7 @@ export default function FormScreen() {
     firstName: "",
     lastName: "",
     gender: null,
-    dateOfBirth: null,
+    dateOfBirth: "",
     sports: [],
     team: "",
     location: "",

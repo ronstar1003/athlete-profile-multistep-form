@@ -51,9 +51,7 @@ export default function ProfileView({
           </Typography>
         </Grid>
         <Grid item xs={12} sm={3} sx={{ mt: 0.5 }}>
-          <Typography>{`${
-            userInfo.dateOfBirth?.format("YYYY-MM-DD") || ""
-          }`}</Typography>
+          <Typography>{userInfo.dateOfBirth}</Typography>
         </Grid>
         <Grid item xs={12} sm={3}>
           <Typography variant="h6" align="right">

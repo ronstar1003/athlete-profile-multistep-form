@@ -6,26 +6,9 @@ import type { ProfileRow } from "../types";
 import moment from "moment";
 
 export default function DashboardScreen() {
-  const rows: ProfileRow[] = [
-    {
-      _id: "1",
-      firstName: "Elton",
-      lastName: "Alcantara",
-      gender: 0,
-      dateOfBirth: moment("1984-03-02"),
-      sports: ["Football", "Baseball"],
-    },
-    {
-      _id: "2",
-      firstName: "Roy",
-      lastName: "Zhang",
-      gender: 1,
-      dateOfBirth: moment("1999-02-22"),
-      sports: ["Soccer", "Archery", "Wrestling"],
-    },
-  ];
-
-  const hello = api.example.hello.useQuery({ text: "from tRPC" });
+  const { data: rows, isLoading } = api.profile.all.useQuery({
+    text: "from tRPC",
+  });
 
   return (
     <Container component="main" maxWidth="md" sx={{ padding: 2 }}>
@@ -42,7 +25,11 @@ export default function DashboardScreen() {
           Add Profile
         </Button>
       </Stack>
-      <ProfileList rows={rows} sx={{ marginTop: 2 }} />
+      {isLoading ? (
+        <div>Loading ...</div>
+      ) : (
+        <ProfileList rows={rows as ProfileRow[]} sx={{ marginTop: 2 }} />
+      )}
     </Container>
   );
 }

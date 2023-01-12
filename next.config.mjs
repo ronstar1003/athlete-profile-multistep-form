@@ -17,6 +17,10 @@ const config = {
     return [
       // Rewrite everything else to use `pages/index`
       {
+        source: '/api/:path*',
+        destination: '/api/:path*',
+      },
+      {
         source: '/:path*',
         destination: '/',
       },
