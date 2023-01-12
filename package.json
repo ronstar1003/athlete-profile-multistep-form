@@ -20,6 +20,7 @@
     "@trpc/react-query": "^10.8.1",
     "@trpc/server": "^10.8.1",
     "moment": "^2.29.4",
+    "mongoose": "^6.8.3",
     "next": "13.1.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
