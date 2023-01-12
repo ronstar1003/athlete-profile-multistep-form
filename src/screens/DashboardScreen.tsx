@@ -3,6 +3,7 @@ import { Button, Stack, Typography, Container } from "@mui/material";
 import ProfileList from "../components/ProfileList";
 import { ClientLink } from "../utils/client-router";
 import type { ProfileRow } from "../types";
+import moment from "moment";
 
 export default function DashboardScreen() {
   const rows: ProfileRow[] = [
@@ -11,7 +12,7 @@ export default function DashboardScreen() {
       firstName: "Elton",
       lastName: "Alcantara",
       gender: 0,
-      dateOfBirth: "1984-03-02",
+      dateOfBirth: moment("1984-03-02"),
       sports: ["Football", "Baseball"],
     },
     {
@@ -19,7 +20,7 @@ export default function DashboardScreen() {
       firstName: "Roy",
       lastName: "Zhang",
       gender: 1,
-      dateOfBirth: "1999-02-22",
+      dateOfBirth: moment("1999-02-22"),
       sports: ["Soccer", "Archery", "Wrestling"],
     },
   ];
