@@ -34,6 +34,15 @@ export default function ProfileList({
           </TableRow>
         </TableHead>
         <TableBody>
+          {rows.length === 0 && (
+            <TableRow
+              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+            >
+              <TableCell component="th" scope="row" colSpan={5} align="center">
+                No Profile
+              </TableCell>
+            </TableRow>
+          )}
           {rows.map((row, index) => (
             <TableRow
               key={row._id}
