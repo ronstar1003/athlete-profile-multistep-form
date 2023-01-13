@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const ProfileSchema = new mongoose.Schema({
   firstName: String,
   lastName: String,
-  gender: String,
+  gender: Number,
   dateOfBirth: String,
   sports: [String],
   location: String,
