@@ -15,12 +15,13 @@ export default function ProfileView({
         container
         item
         xs={12}
-        sm={4}
+        sm={5}
         sx={{
           display: "flex",
-          justifyContent: "center",
-          alignItems: "start",
+          justifyContent: "start",
+          alignItems: "center",
           mt: 1,
+          flexDirection: "column",
         }}
       >
         <Avatar
@@ -28,62 +29,77 @@ export default function ProfileView({
           src="/images/boy1.png"
           sx={{ width: 180, height: 180 }}
         />
+        <Typography
+          variant="h6"
+          align="right"
+          sx={{ fontStyle: "italic", mt: 1 }}
+        >
+          {`${userInfo.firstName} ${userInfo.lastName}`}
+        </Typography>
       </Grid>
-      <Grid container item spacing={2} xs={12} sm={8} sx={{ alignItems: "start" }}>
-        <Grid item xs={12} sm={3}>
+      <Grid
+        container
+        item
+        columnSpacing={2}
+        rowSpacing={1}
+        xs={12}
+        sm={7}
+        sx={{ alignItems: "start" }}
+      >
+        {/* <Grid item xs={12} sm={4}>
           <Typography variant="h6" align="right">
             Name
           </Typography>
         </Grid>
-        <Grid item xs={12} sm={9} sx={{ mt: 0.5 }}>
+        <Grid item xs={12} sm={8} sx={{ mt: 0.5 }}>
           <Typography>{`${userInfo.firstName} ${userInfo.lastName}`}</Typography>
-        </Grid>
-        <Grid item xs={12} sm={3}>
-          <Typography variant="h6" align="right">
-            Gender
-          </Typography>
-        </Grid>
-        <Grid item xs={12} sm={3} sx={{ mt: 0.5 }}>
-          <Typography>{`${userInfo.gender ? "Female" : "Male"}`}</Typography>
-        </Grid>
-        <Grid item xs={12} sm={3}>
+        </Grid> */}
+        <Grid item xs={12} sm={4}>
           <Typography variant="h6" align="right">
             DOB
           </Typography>
         </Grid>
-        <Grid item xs={12} sm={3} sx={{ mt: 0.5 }}>
+        <Grid item xs={12} sm={8} sx={{ mt: 0.5 }}>
           <Typography>{userInfo.dateOfBirth}</Typography>
         </Grid>
-        <Grid item xs={12} sm={3}>
+        <Grid item xs={12} sm={4}>
+          <Typography variant="h6" align="right">
+            Gender
+          </Typography>
+        </Grid>
+        <Grid item xs={12} sm={8} sx={{ mt: 0.5 }}>
+          <Typography>{`${userInfo.gender ? "Female" : "Male"}`}</Typography>
+        </Grid>
+        <Grid item xs={12} sm={4}>
           <Typography variant="h6" align="right">
             Location
           </Typography>
         </Grid>
-        <Grid item xs={12} sm={3} sx={{ mt: 0.5 }}>
+        <Grid item xs={12} sm={8} sx={{ mt: 0.5 }}>
           <Typography>{`${userInfo.location}`}</Typography>
         </Grid>
-        <Grid item xs={12} sm={3}>
+        <Grid item xs={12} sm={4}>
           <Typography variant="h6" align="right">
             Team
           </Typography>
         </Grid>
-        <Grid item xs={12} sm={3} sx={{ mt: 0.5 }}>
+        <Grid item xs={12} sm={8} sx={{ mt: 0.5 }}>
           <Typography>{`${userInfo.team}`}</Typography>
         </Grid>
-        <Grid item xs={12} sm={3}>
+        <Grid item xs={12} sm={4}>
           <Typography variant="h6" align="right">
             Sports
           </Typography>
         </Grid>
-        <Grid item xs={12} sm={9} sx={{ mt: 0.5 }}>
+        <Grid item xs={12} sm={8} sx={{ mt: 0.5 }}>
           <Typography>{`${userInfo.sports.join(", ")}`}</Typography>
         </Grid>
-        <Grid item xs={12} sm={3}>
+        <Grid item xs={12} sm={4}>
           <Typography variant="h6" align="right">
             Description
           </Typography>
         </Grid>
-        <Grid item xs={12} sm={9} sx={{ mt: 0.5 }}>
+        <Grid item xs={12} sm={8} sx={{ mt: 0.5 }}>
           <Typography>{`${userInfo.description}`}</Typography>
         </Grid>
       </Grid>
