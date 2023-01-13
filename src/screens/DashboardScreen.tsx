@@ -6,9 +6,11 @@ import type { ProfileRow } from "../types";
 import Loading from "../components/Loading";
 
 export default function DashboardScreen() {
-  const { data: rows, isLoading } = api.profile.get.useQuery({
-    id: "",
-  });
+  const {
+    data: rows,
+    isLoading,
+  }: { data: ProfileRow[] | undefined; isLoading: boolean } =
+    api.profile.get.useQuery({ id: "" });
 
   return (
     <Container component="main" maxWidth="md" sx={{ padding: 2 }}>
@@ -28,7 +30,7 @@ export default function DashboardScreen() {
       {isLoading ? (
         <Loading />
       ) : (
-        <ProfileList rows={rows as ProfileRow[]} sx={{ marginTop: 2 }} />
+        <ProfileList rows={rows || []} sx={{ marginTop: 2 }} />
       )}
     </Container>
   );

@@ -11,6 +11,12 @@ const ProfileSchema = new mongoose.Schema({
   description: String,
 });
 
-module.exports =
-  mongoose.models.Profile ||
+export default (mongoose.models.Profile as mongoose.Model<
+  mongoose.InferSchemaType<typeof ProfileSchema>,
+  mongoose.ObtainSchemaGeneric<typeof ProfileSchema, "TQueryHelpers">,
+  mongoose.ObtainSchemaGeneric<typeof ProfileSchema, "TInstanceMethods">,
+  mongoose.ObtainSchemaGeneric<typeof ProfileSchema, "TVirtuals">,
+  typeof ProfileSchema
+> &
+  mongoose.ObtainSchemaGeneric<typeof ProfileSchema, "TStaticMethods">) ||
   mongoose.model("Profile", ProfileSchema, "profile");

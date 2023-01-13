@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 import { z } from "zod";
 import dbConnect from "../../../lib/dbConnect";
 import Profile from "../../../models/Profile";
@@ -22,7 +23,7 @@ export const profileRouter = createTRPCRouter({
         firstName: z.string(),
         lastName: z.string(),
         dateOfBirth: z.string(),
-        gender: z.number(),
+        gender: z.union([z.number(), z.null()]),
         sports: z.array(z.string()),
         description: z.string(),
         location: z.string(),
@@ -32,6 +33,7 @@ export const profileRouter = createTRPCRouter({
     .mutation(async (req) => {
       await dbConnect();
 
-      return await Profile.create(req.input);
+      const newProfile = await Profile.create(req.input);
+      return { ...newProfile, _id: newProfile._id.toString() };
     }),
 });

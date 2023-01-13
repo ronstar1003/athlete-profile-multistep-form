@@ -1,15 +1,18 @@
 import { api } from "../utils/api";
 import { Button, Stack, Typography, Container, Paper } from "@mui/material";
-import ProfileList from "../components/ProfileList";
 import { ClientLink } from "../utils/client-router";
-import type { ProfileRow } from "../types";
+import type { UserInfo } from "../types";
 import Loading from "../components/Loading";
 import ProfileView from "../components/ProfileView";
 
-export default function ProfileViewScreen({ param: id }) {
-  const { data: userInfo, isLoading } = api.profile.get.useQuery({
-    id,
-  });
+export default function ProfileViewScreen({ param: id }: { param: string }) {
+  const {
+    data: userInfo,
+    isLoading,
+  }: { data: UserInfo | undefined; isLoading: boolean } =
+    api.profile.get.useQuery({
+      id,
+    });
 
   return (
     <Container component="main" maxWidth="md" sx={{ padding: 2 }}>
@@ -30,7 +33,7 @@ export default function ProfileViewScreen({ param: id }) {
         {isLoading ? (
           <Loading />
         ) : (
-          <ProfileView userInfo={userInfo} sx={{ mt: 5 }} />
+          <ProfileView userInfo={userInfo as UserInfo} sx={{ mt: 5 }} />
         )}
       </Paper>
     </Container>

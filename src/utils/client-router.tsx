@@ -13,7 +13,7 @@ interface Context {
 
 export const ClientRouterContext = React.createContext<Context>({
   route: "/",
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  // eslint-disable-next-line @typescript-eslint/no-empty-function, @typescript-eslint/no-unused-vars
   setRoute: (route: string, replace?: boolean) => {},
 });
 
@@ -40,7 +40,10 @@ interface LinkProps extends ComponentProps<"a"> {
 
 // eslint-disable-next-line react/display-name
 export const ClientLink = forwardRef(
-  ({ children, to, ...restProps }: LinkProps, ref) => {
+  (
+    { children, to, ...restProps }: LinkProps,
+    ref: React.LegacyRef<HTMLAnchorElement> | undefined
+  ) => {
     const handleClick: MouseEventHandler<HTMLAnchorElement> = (e) => {
       e.preventDefault();
       window.history.pushState({}, "", to);
@@ -48,7 +51,7 @@ export const ClientLink = forwardRef(
     };
 
     return (
-      <a href={to} {...restProps} onClick={handleClick}>
+      <a href={to} ref={ref} {...restProps} onClick={handleClick}>
         {children}
       </a>
     );

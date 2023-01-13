@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import * as React from "react";
 
 import {
@@ -21,6 +22,7 @@ import { ClientLink } from "../utils/client-router";
 import { Error } from "../types";
 import type { UserInfo, Field } from "../types";
 import Loading from "../components/Loading";
+import CreateSuccess from "../components/CreateSuccess";
 
 const steps = ["Basic Info", "More details", "Review"];
 
@@ -86,8 +88,15 @@ export default function FormScreen() {
     [dirty, error, userInfo]
   );
 
-  const { data, mutate, isLoading, isSuccess } =
-    api.profile.create.useMutation();
+  const {
+    data,
+    mutate,
+    isSuccess,
+  }: {
+    data: { _id: string } | undefined;
+    mutate: (userInfo: UserInfo) => void;
+    isSuccess: boolean;
+  } = api.profile.create.useMutation();
 
   const handleFinish = () => {
     mutate(userInfo);
@@ -137,7 +146,7 @@ export default function FormScreen() {
       default:
         throw new Error("Unknown step");
     }
-  }, [activeStep, userInfo, error, handleFormInputChange, isLoading]);
+  }, [isSuccess, activeStep, userInfo, error, handleFormInputChange]);
 
   return (
     <>
@@ -165,27 +174,10 @@ export default function FormScreen() {
           </Stepper>
           {activeStep === steps.length ? (
             isSuccess ? (
-              <>
-                <Typography variant="h5" align="center" gutterBottom>
-                  Successfully created.
-                </Typography>
-                <Typography variant="subtitle1" align="center">
-                  You can{" "}
-                  <ClientLink to={`/view/${data._id}`}>
-                    <Typography color="blue" component="span">
-                      view
-                    </Typography>
-                  </ClientLink>{" "}
-                  your profile or{" "}
-                  <ClientLink to="/">
-                    <Typography color="blue" component="span">
-                      go
-                    </Typography>{" "}
-                    to home
-                  </ClientLink>
-                  .
-                </Typography>
-              </>
+              <CreateSuccess
+                viewLink={`/view/${data?._id || ""}`}
+                homeLink="/"
+              />
             ) : (
               <Loading />
             )
