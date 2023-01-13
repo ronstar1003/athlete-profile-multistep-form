@@ -26,7 +26,7 @@ export default function ProfileList({
         <TableHead>
           <TableRow>
             <TableCell>No</TableCell>
-            <TableCell align="right">Name</TableCell>
+            <TableCell align="left">Name</TableCell>
             <TableCell align="right">Gender</TableCell>
             <TableCell align="right">Date of Birth</TableCell>
             <TableCell align="right">Sports</TableCell>
@@ -51,7 +51,7 @@ export default function ProfileList({
               <TableCell component="th" scope="row">
                 {index + 1}
               </TableCell>
-              <TableCell align="right">{`${row.firstName} ${row.lastName}`}</TableCell>
+              <TableCell align="left">{`${row.firstName} ${row.lastName}`}</TableCell>
               <TableCell align="right">{row.gender ? "F" : "M"}</TableCell>
               <TableCell align="right">{row.dateOfBirth}</TableCell>
               <TableCell align="right">{row.sports.join(", ")}</TableCell>
